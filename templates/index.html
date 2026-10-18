@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+    <title>Job Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>求人票解析ツール</h1>
+
+    <form method="POST">
+        <textarea name="job_text" rows="10" cols="60"></textarea>
+        <br><br>
+        <button type="submit">解析</button>
+    </form>
+
+    <h2>検出スキル</h2>
+
+<div class="result-box">
+
+    <h2>マッチ率</h2>
+    <div class="rate">{{ match_rate }}%</div>
+    <div class="progress" style="width: {{ match_rate }}%; background-color: {{ bar_color }};">
+        {{ match_rate }}%
+    </div>
+</div>
+
+    <h2>保有スキル</h2>
+    <ul>
+        {% for skill in matched_skills %}
+        <li>✅ {{ skill }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>不足スキル</h2>
+    <ul>
+        {% for skill in missing_skills %}
+        <li>❌ {{ skill }}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+</body>
+</html>
+``
