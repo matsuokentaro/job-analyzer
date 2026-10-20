@@ -1,69 +1,433 @@
+
+/* ===== 基本設定 ===== */
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background-color: #f4f4f4;
+    margin: 0;
+    padding: 40px 24px;
+    background: #f4f7fb;
+    color: #172033;
+    font-family:
+        "Segoe UI",
+        "Noto Sans JP",
+        sans-serif;
+    line-height: 1.7;
+}
+
+/* ===== ページ全体 ===== */
+body > h1,
+body > form,
+body > h2,
+body > .result-box,
+body > ul {
+    width: 100%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 h1 {
-    color: #0078d7;
-    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+h2 {
+    margin-top: 30px;
+    margin-bottom: 14px;
+    font-size: 23px;
+    font-weight: 750;
+}
+
+/* ===== 求人票入力フォーム ===== */
+form {
+    margin-top: 24px;
+    margin-bottom: 30px;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e5eaf2;
+    border-radius: 18px;
+    box-shadow: 0 6px 24px rgba(25, 45, 80, 0.06);
+}
+
+textarea {
+    display: block;
+    width: 100%;
+    min-height: 190px;
+    padding: 16px;
+    border: 1px solid #d9e1ee;
+    border-radius: 12px;
+    background: #fbfcff;
+    color: #172033;
+    font: inherit;
+    font-size: 15px;
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #3478f6;
+    box-shadow: 0 0 0 4px rgba(52, 120, 246, 0.12);
+}
+
+button {
+    margin-top: 16px;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3478f6, #2156d9);
+    color: #ffffff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(52, 120, 246, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(52, 120, 246, 0.28);
+}
+
+/* ===== マッチ率カード ===== */
+.result-box {
+    margin-top: 18px;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e5eaf2;
+    border-radius: 18px;
+    box-shadow: 0 6px 24px rgba(25, 45, 80, 0.06);
+}
+
+.result-box h2 {
+    margin-top: 0;
+}
+
+.rate {
+    margin-top: 8px;
+    color: #2563eb;
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+/* ===== マッチ率バー ===== */
+.progress {
+    width: var(--match-rate, 0%);
+    max-width: 100%;
+    min-width: 0;
+    height: 34px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 10px;
+    background: var(--bar-color, #3478f6);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    transition: width 0.4s ease;
+}
+
+/* ===== スキル一覧 ===== */
+ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+ul li {
+    margin: 8px 0;
+    padding: 12px 16px;
+    border: 1px solid #e5eaf2;
+    border-radius: 10px;
+    background: #ffffff;
+    font-size: 15px;
+}
+
+/* ===== スマートフォン対応 ===== */
+@media (max-width: 600px) {
+    body {
+        padding: 24px 16px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    form,
+    .result-box {
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .rate {
+        font-size: 34px;
+    }
+
+    textarea {
+        min-height: 160px;
+    }
+}
+
+
+/* ===== Job Analyzer ヘッダー ===== */
+.page-header {
+    max-width: 1000px;
+    margin: 0 auto 36px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.brand-icon {
+    width: 62px;
+    height: 62px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #3478f6, #1747b8);
+    color: #ffffff;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    box-shadow: 0 8px 20px rgba(52, 120, 246, 0.22);
+}
+
+.header-text h1 {
+    margin: 0;
+    color: #172033;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.7px;
+}
+
+.header-text p {
+    margin: 7px 0 0;
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* スマートフォン対応 */
+@media (max-width: 600px) {
+    .page-header {
+        gap: 12px;
+        margin-bottom: 28px;
+    }
+
+    .brand-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        font-size: 17px;
+    }
+
+    .header-text h1 {
+        font-size: 25px;
+    }
+
+    .header-text p {
+        font-size: 13px;
+    }
+}
+
+
+.input-label {
+    display: block;
+    margin-bottom: 12px;
+    color: #172033;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 textarea {
     width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    min-height: 220px;
+    padding: 16px;
+    line-height: 1.8;
+    border: 1px solid #d9e1ee;
+    border-radius: 12px;
+    background: #fbfcff;
 }
 
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+form button {
+    margin-top: 20px;
+}
+
+
+/* ===== マッチ率カード ===== */
+.result-box {
+    margin: 24px auto;
+    padding: 30px;
+    max-width: 1000px;
+    background: linear-gradient(145deg, #ffffff, #fbfdff);
+    border: 1px solid #e1e8f2;
+    border-radius: 22px;
+    box-shadow: 0 12px 32px rgba(30, 55, 90, 0.07);
+    transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.result-box:hover {
+    box-shadow: 0 16px 38px rgba(30, 55, 90, 0.11);
+    transform: translateY(-2px);
+}
+
+.result-box h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    color: #172033;
+    font-size: 23px;
+    font-weight: 750;
+}
+
+/* ===== 大きなマッチ率表示 ===== */
+.rate {
+    margin: 8px 0 14px;
+    color: #2563eb;
+    font-size: clamp(40px, 5vw, 54px);
+    font-weight: 850;
+    line-height: 1.2;
+    letter-spacing: -1.5px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ===== 進捗バー ===== */
+.progress {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 20px;
+    margin-top: 12px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e9eff8;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* 実際の進捗を表す色付きバー */
+/* 最初は0%、表示時に実際の幅まで伸びる */
+.progress::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    max-width: 100%;
+    border-radius: inherit;
+    background: var(--bar-color, #3478f6);
+    z-index: -1;
+    animation: fill-progress 1.2s cubic-bezier(.22, 1, .36, 1) forwards;
+}
+
+@keyframes fill-progress {
+    from {
+        width: 0;
+    }
+    to {
+        width: var(--match-rate, 0%);
+    }
+}
+
+/* 動きを減らす設定の人にはアニメーションを無効化 */
+@media (prefers-reduced-motion: reduce) {
+    .progress::before {
+        animation: none;
+        width: var(--match-rate, 0%);
+    }
+}
+
+/* バーの数値を前面に表示 */
+.progress {
+    isolation: isolate;
+}
+
+.progress::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+}
+
+/* ===== スマートフォン対応 ===== */
+@media (max-width: 600px) {
+    .result-box {
+        padding: 22px 18px;
+        border-radius: 17px;
+    }
+
+    .result-box h2 {
+        font-size: 20px;
+    }
+
+    .rate {
+        font-size: 40px;
+    }
+
+    .progress {
+        height: 16px;
+    }
+}
+
+
+/* 結果カードの登場アニメーション */
+.result-box {
+    animation: result-appear 0.6s ease-out both;
+}
+
+@keyframes result-appear {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ボタンのホバーアニメーション */
 button {
-    background: #0078d7;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 button:hover {
-    background: #005fa3;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
 }
 
-.result-box {
-    background: white;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+button:active {
+    transform: translateY(0) scale(0.98);
 }
 
-.rate {
-    font-size: 32px;
-    font-weight: bold;
-    color: #0078d7;
+@media (prefers-reduced-motion: reduce) {
+    .result-box {
+        animation: none;
+    }
+
+    button {
+        transition: none;
+    }
 }
 
-.progress-bar {
-    width: 100%;
-    background-color: #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.progress {
-    height: 35px;
-    background: linear-gradient(
-        90deg,
-        #0078d7,
-        #00bfff
-    );
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    line-height: 35px;
-    transition: width 0.8s ease;
-}

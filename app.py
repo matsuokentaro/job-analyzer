@@ -48,12 +48,14 @@ def index():
                 len(matched_skills) / len(found_skills) * 100
             )
 
-        if match_rate >= 80:
-            bar_color = "green"
-        elif match_rate >= 50:
-            bar_color = "orange"
-        else:
-            bar_color = "red"
+        
+    if match_rate >= 80:
+        bar_color = "#16a34a"  # 緑：高マッチ
+    elif match_rate >= 50:
+        bar_color = "#f59e0b"  # オレンジ：あと一歩
+    else:
+        bar_color = "#ef4444"  # 赤：スキル強化
+
 
     return render_template(
         "index.html",

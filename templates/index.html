@@ -1,29 +1,52 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>Job Analyzer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
-    <h1>求人票解析ツール</h1>
+    <header class="page-header">
+        <div class="brand-icon">JA</div>
+        <div class="header-text">
+            <h1>Job Analyzer</h1>
+            <p>求人票を分析して、あなたのスキルとのマッチ度をチェック。</p>
+        </div>
+    </header>
 
     <form method="POST">
-        <textarea name="job_text" rows="10" cols="60"></textarea>
-        <br><br>
-        <button type="submit">解析</button>
+        <label for="job_text" class="input-label">
+            求人票の内容
+        </label>
+
+        <textarea
+            id="job_text"
+            name="job_text"
+            rows="8"
+            placeholder="求人票の文章をここに貼り付けてください。
+
+    例：Python、Flask、SQLの経験があるエンジニアを募集します。"
+            required
+        ></textarea>
+
+        <button type="submit">求人票を解析する →</button>
     </form>
+
 
     <h2>検出スキル</h2>
 
 <div class="result-box">
 
     <h2>マッチ率</h2>
-    <div class="rate">{{ match_rate }}%</div>
-    <div class="progress" style="width: {{ match_rate }}%; background-color: {{ bar_color }};">
-        {{ match_rate }}%
+
+    <div class="rate">
+        <span class="count-up" data-target="{{ match_rate }}">0</span>%
     </div>
+
+    <div class="progress"
+    style="--match-rate: {{ match_rate }}%; --bar-color: {{ bar_color }};">
+    {{ match_rate }}%
+</div>
 </div>
 
     <h2>保有スキル</h2>
@@ -41,6 +64,51 @@
     </ul>
 
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll(".count-up");
+    const duration = 1200; // アニメーション時間：1.2秒
+
+    counters.forEach((counter) => {
+        const target = Number(counter.dataset.target);
+
+        if (!Number.isFinite(target)) {
+            return;
+        }
+
+        // 動きを減らす設定なら、最終値をすぐに表示
+        if (window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches) {
+            counter.textContent = target;
+            return;
+        }
+
+        const startTime = performance.now();
+
+        function updateCount(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // 最初はゆっくり、最後は滑らかに停止
+            const easedProgress = 1 - Math.pow(1 - progress, 3);
+            const currentValue = Math.round(
+                target * easedProgress
+            );
+
+            counter.textContent = currentValue;
+
+            if (progress < 1) {
+                requestAnimationFrame(updateCount);
+            } else {
+                counter.textContent = target;
+            }
+        }
+
+        requestAnimationFrame(updateCount);
+    });
+});
+</script>
 </body>
+
 </html>
-``
